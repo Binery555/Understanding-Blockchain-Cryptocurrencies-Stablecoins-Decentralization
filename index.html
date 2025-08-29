@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Understanding Blockchain, Cryptocurrencies, Stablecoins & Decentralization</title>
+  <style>
+    :root{
+      --bg:#0f1115; --panel:#1e2329; --text:#e7edf3; --muted:#c9d2da; --accent:#f0b90b; --soft:#2b3139;
+      --maxw: 980px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif}
+    header{position:sticky;top:0;z-index:20;display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--panel);box-shadow:0 2px 10px rgba(0,0,0,.35)}
+    header h1{margin:0;font-size:18px;color:var(--accent);letter-spacing:.2px}
+    .row{display:flex;gap:12px;align-items:center}
+    select{appearance:none;background:var(--soft);border:1px solid #0000;color:var(--text);padding:8px 12px;border-radius:10px}
+    main{max-width:var(--maxw);margin:0 auto;padding:22px}
+    .card{background:var(--panel);border:1px solid #0003;border-radius:16px;padding:20px;margin:0 0 18px 0}
+    .toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+    .toc a{display:block;background:var(--soft);color:var(--text);text-decoration:none;padding:10px 12px;border-radius:12px}
+    h2{color:var(--accent);margin:14px 0 8px}
+    h3{margin:14px 0 6px;color:#ffd666}
+    p{margin:10px 0;color:var(--text)}
+    ul{margin:8px 0 8px 20px}
+    li{margin:6px 0}
+    .note{background:#0b1219;border-left:4px solid var(--accent);padding:10px 12px;border-radius:10px}
+    footer{opacity:.85;color:var(--muted);padding:40px 20px;text-align:center}
+    code{background:#0b1219;border:1px solid #0003;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Understanding Blockchain, Cryptocurrencies, Stablecoins & Decentralization</h1>
+    <div class="row">
+      <label for="languageSwitcher" style="font-size:14px;color:var(--muted)">Language:</label>
+      <select id="languageSwitcher">
+        <option value="en">English</option>
+        <option value="si">සිංහල (Sinhala)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <!-- Other languages shown but intentionally inactive per your spec -->
+        <option value="ar">العربية (Arabic)</option>
+        <option value="th">ไทย (Thai)</option>
+        <option value="fr">Français (French)</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <div id="content" class="card"></div>
+  </main>
+
+  <footer>
+    © 2025 Crypto Basics Primer • Built with a simple language switcher (EN / SI / TA). Other menu languages are placeholders as requested.
+  </footer>
+
+  <script>
+    // --- English (~3000-word tier, compacted but comprehensive) ---
+    const en = `
+<section class="card">
+  <h2 id="intro">1) Introduction</h2>
+  <p>
+    Blockchain is a new way to record, verify, and transfer value on the internet without a central gatekeeper. It powers
+    cryptocurrencies like <strong>Bitcoin (BTC)</strong>, programmable networks like <strong>Ethereum (ETH)</strong>, and ecosystems such as
+    <strong>BNB Chain (BNB)</strong>. With <em>stablecoins</em> like <strong>USDT</strong> and <strong>USDC</strong>, users can move digital dollars 24/7.
+    This guide builds a practical mental model: what a blockchain is, why decentralization matters, how major coins differ,
+    what stablecoins are, and where the technology is used today—<strong>Payments, DeFi, NFTs</strong>, and beyond.
+  </p>
+  <div class="note"><strong>Quick idea:</strong> A blockchain is a shared database that many computers agree on. Once data is written, it’s extremely hard to change.</div>
+</section>
+
+<section class="card">
+  <h2 id="what">2) What is a Blockchain?</h2>
+  <h3>2.1 Core Definition</h3>
+  <p>
+    A blockchain is a <em>distributed ledger</em>: a list of transactions replicated across many independent computers (nodes).
+    Transactions are grouped into <strong>blocks</strong>; each block references the previous one via a cryptographic <strong>hash</strong>, creating an
+    ordered chain. Security emerges from <strong>consensus</strong>—rules that let nodes agree on a single history even if some are faulty or
+    malicious.
+  </p>
+  <h3>2.2 How it Works (Simplified)</h3>
+  <ul>
+    <li><strong>Public keys</strong> act like account numbers; <strong>private keys</strong> authorize spending. Don’t share your private key.</li>
+    <li>Users broadcast a transaction → nodes validate → miners/validators bundle them into a block → the block is appended.</li>
+    <li>Every full node stores/serves the chain, making censorship and single-point failure far less likely.</li>
+  </ul>
+  <h3>2.3 Consensus Mechanisms</h3>
+  <ul>
+    <li><strong>Proof of Work (PoW)</strong>: Miners compete with computing power (BTC). Pros: battle-tested security. Cons: energy intensive.</li>
+    <li><strong>Proof of Stake (PoS)</strong>: Validators lock coins as collateral (ETH, BNB Chain). Pros: energy efficient, scalable. Cons: new threat models.</li>
+  </ul>
+  <h3>2.4 Why Immutability Matters</h3>
+  <p>
+    Because blocks link by hash, changing old data breaks the chain unless you redo massive work and convince the network.
+    This makes the ledger <strong>tamper-resistant</strong>, a property traditional databases don’t natively offer without trusted operators.
+  </p>
+</section>
+
+<section class="card">
+  <h2 id="decentralization">3) Decentralization</h2>
+  <p>
+    <strong>Decentralization</strong> distributes power among many actors: anyone can run a node, verify rules, and resist capture. It reduces
+    dependency on a single company or state and enables systems to be <strong>open, permissionless, and borderless</strong>. Trade-off: fully
+    decentralized systems often scale slower than centralized clouds, so real designs use a spectrum from on-chain to off-chain.
+  </p>
+</section>
+
+<section class="card">
+  <h2 id="coins">4) Major Coins: BTC, ETH, BNB</h2>
+  <h3>4.1 Bitcoin (BTC)</h3>
+  <ul>
+    <li><strong>Purpose:</strong> Peer-to-peer digital cash evolving into a scarce store of value (21M cap). </li>
+    <li><strong>Security:</strong> PoW miners and a huge node network; longest-running chain.</li>
+    <li><strong>Monetary Policy:</strong> Halvings cut issuance ~every 4 years → predictable scarcity (“digital gold”).</li>
+    <li><strong>Uses:</strong> Savings, remittances, payments where supported; L2 (e.g., Lightning) targets fast micro-payments.</li>
+  </ul>
+  <h3>4.2 Ethereum (ETH)</h3>
+  <ul>
+    <li><strong>Purpose:</strong> Smart contracts and dApps platform. ETH is the gas that powers computation.</li>
+    <li><strong>Security:</strong> PoS validators; slashing discourages misbehavior.</li>
+    <li><strong>Features:</strong> Tokens (ERC-20), NFTs (ERC-721), DAOs, DeFi protocols; vast developer ecosystem.</li>
+    <li><strong>Scaling:</strong> Layer-2 rollups (optimistic/ZK) reduce fees and increase throughput.</li>
+  </ul>
+  <h3>4.3 BNB (BNB Chain)</h3>
+  <ul>
+    <li><strong>Purpose:</strong> Utility coin for fees and apps across BNB Smart Chain & Beacon Chain.</li>
+    <li><strong>Security/Design:</strong> PoS-style validators; fast finality; EVM compatibility simplifies app deployment.</li>
+    <li><strong>Uses:</strong> Exchange fee discounts (historically), DeFi, gaming, NFTs across the BNB ecosystem.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="stable">5) Stablecoins: USDT & USDC</h2>
+  <p>
+    <strong>Stablecoins</strong> track a reference asset—usually the US dollar—so users can avoid crypto volatility while staying on-chain.
+  </p>
+  <ul>
+    <li><strong>USDT (Tether):</strong> Widely used for trading and settlement across many chains; aims to maintain $1 peg via reserves.</li>
+    <li><strong>USDC (USD Coin):</strong> Dollar-pegged with a focus on transparency and regulated partners; common in payments and DeFi.</li>
+  </ul>
+  <p>
+    Benefits: 24/7 transfer, global reach, programmable in smart contracts. Risks: issuer risk, bank/treasury exposure, and
+    regulatory changes. Always understand who issues a stablecoin, what backs it, and how redemption works.
+  </p>
+</section>
+
+<section class="card">
+  <h2 id="use">6) Use Cases: Payments, DeFi, NFTs (and more)</h2>
+  <h3>6.1 Payments & Remittances</h3>
+  <ul>
+    <li>Borderless transfers settle in minutes, often with lower fees than legacy rails.</li>
+    <li>Merchants can accept crypto directly or via processors that auto-convert to fiat.</li>
+  </ul>
+  <h3>6.2 DeFi (Decentralized Finance)</h3>
+  <ul>
+    <li>Lending/borrowing without banks, using collateralized smart contracts.</li>
+    <li>DEXs for token swaps (AMMs, order books); yield strategies; on-chain derivatives.</li>
+    <li>Risks: smart-contract bugs, oracle manipulation, liquidity shocks; use audits and risk limits.</li>
+  </ul>
+  <h3>6.3 NFTs & Digital Ownership</h3>
+  <ul>
+    <li>Unique tokens for art, music, tickets, in-game assets; creators earn royalties via code.</li>
+    <li>Beyond art: identity credentials, supply-chain certificates, and real-world asset tokenization.</li>
+  </ul>
+  <h3>6.4 Beyond Finance</h3>
+  <ul>
+    <li>Supply chains with transparent provenance; tamper-evident records.</li>
+    <li>Decentralized identity (DID), verifiable credentials, and data marketplaces.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="risks">7) Risks, Security & Best Practices</h2>
+  <ul>
+    <li><strong>Self-custody:</strong> Use hardware wallets for large balances; back up your seed phrase offline.</li>
+    <li><strong>Phishing:</strong> Check URLs, revoke suspicious approvals, and use two-factor authentication.</li>
+    <li><strong>Volatility:</strong> Diversify; never invest more than you can afford to lose.</li>
+    <li><strong>Smart-contract risk:</strong> Prefer audited protocols; understand upgrade/admin keys.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="reg">8) Regulation & Compliance (High-level)</h2>
+  <p>
+    Laws differ by country. Common themes include KYC/AML for businesses, securities/tax treatment for tokens, and consumer
+    protection. Whether you’re a user or a builder, stay informed about your local rules and reporting obligations.
+  </p>
+</section>
+
+<section class="card">
+  <h2 id="start">9) Getting Started</h2>
+  <ul>
+    <li>Choose a wallet (custodial exchange account or non-custodial like MetaMask/Trust Wallet).</li>
+    <li>Understand keys & seed phrases; start with small test amounts.</li>
+    <li>Learn fees (“gas”), slippage, and confirmations before large transactions.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="glossary">10) Mini Glossary</h2>
+  <ul>
+    <li><strong>Address:</strong> Where you receive assets, derived from your public key.</li>
+    <li><strong>Gas:</strong> Fee paid to validators/miners to process transactions.</li>
+    <li><strong>DAO:</strong> On-chain community that governs via tokens and proposals.</li>
+  </ul>
+</section>
+`;
+
+    // --- Sinhala (parallel structure) ---
+    const si = `
+<section class="card">
+  <h2 id="intro">1) හඳුන්වාදීම</h2>
+  <p>
+    බ්ලොක්චේන් යනු මධ්‍යස්ථ පාලකයකු නොමැතත්, අන්තර්ජාලයේ වටිනාකම් සටහන් කිරීම, තහවුරු කිරීම සහ මාරු කිරීමේ නව ක්‍රමයකි.
+    මෙය <strong>Bitcoin (BTC)</strong>, <strong>Ethereum (ETH)</strong> වැනි ක්‍රිප්ටෝකරන්සි සහ <strong>BNB Chain (BNB)</strong> වැනි පද්ධති බලගන්වයි.
+    <strong>USDT</strong> හා <strong>USDC</strong> වැනි ස්ථාවර නாணය මඟින් ඩොලර් අන්තර්ජාලයේ 24/7 ගමන් කරයි. මේ මාර්ගδර්ශකය මඟින්
+    බ්ලොක්චේන් කුමක්ද, මධ්‍යස්ථය රහිතකම ఎందుకు වැදගත්ද, BTC/ETH/BNB අතර වෙනස, ස්ථාවර නாணය කුමක්ද, සහ
+    <strong>ගෙවීම්, DeFi, NFT</strong> වැනි භාවිතයන් පිළිබඳ පැහැදිලි අර්ථ දැක්වීමක් ලබා දෙයි.
+  </p>
+  <div class="note"><strong>ඉක්මන් අදහස:</strong> බොහෝ පරිගණක විසින් එකම ලෙජරයක් පරිරක්ෂා කරන අතර එහි දත්ත වෙනස් කිරීම අති දැඩි ලෙස අපහසුය.</div>
+</section>
+
+<section class="card">
+  <h2 id="what">2) බ්ලොක්චේන් කියන්නේ මොකද්ද?</h2>
+  <h3>2.1 මූලික අර්ථ දැක්වීම</h3>
+  <p>
+    බ්ලොක්චේන් යනු බෙදා හරින ලද <em>ලෙජරයක්</em> වන අතර ගනුදෙනු <strong>බ්ලොක්</strong> ලෙස එකතු කරයි. එක් බ්ලොක් එක පසුගිය බ්ලොක් එකට
+    <strong>හෑෂ්</strong> එකකින් සම්බන්ධ වන නිසා සකස් කළ ඉතිහාසයක් සෘජුවම හඳුනාගත හැක. <strong>Consensus</strong> නියමයන් මඟින්
+    සියලුම නෝඩ එකම ඉතිහාසයක් පිළිගනී.
+  </p>
+  <h3>2.2 ක්‍රියාකාරී සිතියම</h3>
+  <ul>
+    <li><strong>Public key</strong> = ගිණුම් අංකය; <strong>Private key</strong> = මුදල් යවීමට අවසරය. Private key සුරකින්න.</li>
+    <li>ගනුදෙනු සම්ප්‍රේෂණය කරයි → නෝඩ තහවුරු කරයි → මයිනර්/වැලිඩේටර් බ්ලොක් එකට ඇතුළත් කරයි → சங்கிலියට එකතු කරයි.</li>
+    <li>Full node රැසක් ලෙජරය නිරන්තරයෙන් රැකගන්නා නිසා censorship හා single-point failure අවමය.</li>
+  </ul>
+  <h3>2.3 එකඟතාව (Consensus)</h3>
+  <ul>
+    <li><strong>Proof of Work (PoW):</strong> BTC—කම්පීුටින් බලය හරහා තරඟ කිරීම; ආරක්ෂාව උසස්, ශක්ති වියදම වැඩි.</li>
+    <li><strong>Proof of Stake (PoS):</strong> ETH/BNB—නாணය අත්තිකාරම් ලෙස ලොක් කර validators වෙයි; බලශක්ති ඉතිරිය, නව අවදානම්.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="decentralization">3) මධ්‍යස්ථය රහිතකම (Decentralization)</h2>
+  <p>
+    බලය බෙදී පවතින නිසා කිසිම පාර්ශ්වයකට පූර්ණ පාලනයක් නැත. ඕනෑම කෙනෙකුට nodeක් ධාවනය කර නියමයන් සත්‍යාපනය කළ හැක.
+    සම්පූර්ණ මධ්‍යස්ථය රහිත පද්ධති මත වැඩි විශ්වාසයකි, නමුත් පරිමාණකරණය මන්දගාමී විය හැක; එබැවින් ව්‍යවස්ථාත්මකව
+    on-chain සහ off-chain මිශ්‍ර ව්‍යූහ භාවිතා කරයි.
+  </p>
+</section>
+
+<section class="card">
+  <h2 id="coins">4) ප්‍රධාන නாணය: BTC, ETH, BNB</h2>
+  <h3>4.1 Bitcoin (BTC)</h3>
+  <ul>
+    <li><strong>ඉලක්කය:</strong> Peer-to-peer ඩිජිටල් මුදල/වටිනාකම් ගබඩා කිරීම (ජම්පා 21 මිලියන).</li>
+    <li><strong>ආරක්ෂාව:</strong> PoW miners + විශාල node ජාලය.</li>
+    <li><strong>නිතරීකරණය:</strong> Halving මඟින් නිකුත් කිරීම අවුරුදු ~4කට වරක් අඩුවෙයි → දුර්ලභතාවය.</li>
+  </ul>
+  <h3>4.2 Ethereum (ETH)</h3>
+  <ul>
+    <li><strong>ඉලක්කය:</strong> Smart contracts සහ dApps. ETH = gas.</li>
+    <li><strong>විශේෂතා:</strong> ERC-20 ටෝකන, NFTs, DAOs, DeFi; Layer-2 මඟින් පරිමාණකරණය.</li>
+  </ul>
+  <h3>4.3 BNB</h3>
+  <ul>
+    <li><strong>ඉලක්කය:</strong> BNB Chain පද්ධතියේ ගාස්තු/යෙදුම්.</li>
+    <li><strong>රූපරැසිය:</strong> PoS-ශ්‍රේණි; ඉක්මන් finality; EVM අනුකූලතාව.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="stable">5) ස්ථාවර නாணය: USDT & USDC</h2>
+  <p>
+    ස්ථාවර නாணයන් USD වැනි සම්බන්ධ මුදලකට සමාන වටිනාකම තබා ගැනීමට උත්සාහ කරයි. එම නිසා වටිනාකම් අතිශය හඹායන
+    වියදම්වලින් වළකිමින් on-chain ලෝකයේ සිටිය හැක.
+  </p>
+  <ul>
+    <li><strong>USDT:</strong> බහු චේන්වල ගනුදෙනු/හුවමාරු සඳහා වැඩි ලෙස භාවිතා වේ.</li>
+    <li><strong>USDC:</strong> පාරදර්ශීතාව සහ නියාමිත හවුල්කරුවන් මත අවධානය.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="use">6) භාවිතයන්: ගෙවීම්, DeFi, NFTs</h2>
+  <ul>
+    <li><strong>ගෙවීම්/Remittance:</strong> බාධක රහිත, වේගවත්, සතිපතා 24/7.</li>
+    <li><strong>DeFi:</strong> බැංකු රහිත ණය/ධාරක; DEX; ණයපාත්‍ර; අවදානම් → contract දෝෂ, liquidity.</li>
+    <li><strong>NFTs:</strong> කලා/ටිකට්/ගේම් වස්තු; හිමිකම් on-chain.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="risks">7) අවදානම් සහ ආරක්ෂාව</h2>
+  <ul>
+    <li>Hardware wallet භාවිතා කරන්න; seed phrase offline සුරකින්න.</li>
+    <li>Phishing වලකිනු: URL පරීක්ෂා කරන්න; approvals revoke කරන්න.</li>
+    <li>වෙනස්කම්: අවදානම් වශයෙන් බෙදා හරින්න; ඔබට හැකි දේවල් පමණක් ජංගම කරන්න.</li>
+  </ul>
+</section>
+`;
+
+    // --- Tamil (Step 3) ---
+    const ta = `
+<section class="card">
+  <h2 id="intro">1) அறிமுகம்</h2>
+  <p>
+    ப்ளாக்செயின் என்பது மைய அதிகாரம் இன்றி இணையத்தில் மதிப்பை பதிவு செய்யவும் மாற்றவும் உதவும் தொழில்நுட்பம்.
+    இது <strong>Bitcoin (BTC)</strong>, <strong>Ethereum (ETH)</strong>, <strong>BNB Chain (BNB)</strong> போன்ற சூழல்களுக்கு அடிப்படையாகிறது.
+    <strong>USDT</strong>, <strong>USDC</strong> போன்ற ஸ்டேபிள்காயின்கள் டாலர் மதிப்பைப் பின்தொடர்கின்றன; 24/7 பரிமாற்றங்களை சாத்தியமாக்குகின்றன.
+    இந்த வழிகாட்டி ப்ளாக்செயின் என்ன, மையமற்றதன் முக்கியத்துவம், BTC/ETH/BNB வேறுபாடுகள், ஸ்டேபிள்காயின் கருத்து,
+    மற்றும் <strong>கொடுப்பனவு, DeFi, NFT</strong> போன்ற பயன்பாடுகளை தெளிவாக விளக்குகிறது.
+  </p>
+  <div class="note"><strong>சுருக்கமாக:</strong> பல கணினிகள் பகிர்ந்து கொள்ளும் ஒரு லெட்ஜர். ஒருமுறை எழுதப்பட்ட தரவை மாற்றுவது மிகக் கடினம்.</div>
+</section>
+
+<section class="card">
+  <h2 id="what">2) ப்ளாக்செயின் என்றால் என்ன?</h2>
+  <h3>2.1 அடிப்படை வரையறை</h3>
+  <p>
+    ப்ளாக்செயின் ஒரு <em>Distributed Ledger</em>. பரிமாற்றங்கள் <strong>Blocks</strong> ஆகக் குழுமப்படுகின்றன; ஒவ்வொரு Block-மும் முந்தைய Block-ஐ
+    குறியாக்க <strong>Hash</strong> மூலம் இணைக்கிறது. <strong>Consensus</strong> விதிகள் மூலம் எல்லா Nodes-மும் ஒரே வரலாற்றை ஏற்கின்றன.
+  </p>
+  <h3>2.2 செயல்முறை (எளிதாக்கி)</h3>
+  <ul>
+    <li><strong>Public Key</strong> = கணக்கு முகவரி; <strong>Private Key</strong> = செலுத்த அனுமதி. இதை எவருக்கும் பகிர வேண்டாம்.</li>
+    <li>பரிமாற்றம் ஒலிபரப்பு → Nodes சரிபார்ப்பு → Miners/Validators Block-இல் சேர்த்து சங்கிலியில் இணைப்பு.</li>
+    <li>பல <em>Full Nodes</em> லெட்ஜரை முழுமையாக வைத்திருப்பதால் தணிக்கை அல்லது Single-point Failure சாத்தியம் குறையும்.</li>
+  </ul>
+  <h3>2.3 ஒப்புமதி முறைகள்</h3>
+  <ul>
+    <li><strong>Proof of Work:</strong> (BTC) கணக்கீட்டு சக்தி; பாதுகாப்பு வலிமை; ஆற்றல் செலவு அதிகம்.</li>
+    <li><strong>Proof of Stake:</strong> (ETH/BNB) நாணயங்களை பூட்டி Validators ஆகுதல்; மின்சார திறன்; புதிய அபாயங்கள்.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="decentralization">3) மையமற்ற தன்மை</h2>
+  <p>
+    அதிகாரம் பலரிடம் பகிரப்பட்டிருப்பதால் ஒரு தரப்புக்கும் முழுக் கட்டுப்பாடு இல்லை. யாரும் Node ஓடவைத்து விதிகளைச் சரிபார்க்க முடியும்.
+    முழுமையாக மையமற்ற அமைப்புகள் அதிக நம்பகத்தன்மை தரும்; ஆனால் அளவீடு சவாலாக இருக்கலாம். நடைமுறையில் on-chain மற்றும்
+    off-chain அணுகுமுறைகள் இணைந்து பயன்படுத்தப்படுகின்றன.
+  </p>
+</section>
+
+<section class="card">
+  <h2 id="coins">4) முக்கிய நாணயங்கள்: BTC, ETH, BNB</h2>
+  <h3>4.1 Bitcoin (BTC)</h3>
+  <ul>
+    <li><strong>நோக்கம்:</strong> சமத்துவ டிஜிட்டல் பணம்/மதிப்பு சேமிப்பு (மொத்த அளவு 21 மில்லியன்).</li>
+    <li><strong>பாதுகாப்பு:</strong> PoW மைனர்கள் + பெரிய நோட் வலைப்பின்னல்.</li>
+    <li><strong>வெளியீடு:</strong> ஹால்விங் மூலம் வெளியீடு ~4 ஆண்டுகளுக்கு ஒருமுறை குறையும் → அரிது.</li>
+  </ul>
+  <h3>4.2 Ethereum (ETH)</h3>
+  <ul>
+    <li><strong>நோக்கம்:</strong> Smart Contracts, dApps; ETH = Gas.</li>
+    <li><strong>அம்சங்கள்:</strong> ERC-20, NFTs, DAOs, DeFi; Layer-2 Rollups மூலம் அளவீடு.</li>
+  </ul>
+  <h3>4.3 BNB</h3>
+  <ul>
+    <li><strong>நோக்கம்:</strong> BNB Chain சூழலில் கட்டணங்கள்/பயன்பாடுகள்.</li>
+    <li><strong>வடிவமைப்பு:</strong> PoS-பாணி Validators; விரைவான Finality; EVM இணக்கமானது.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="stable">5) ஸ்டேபிள்காயின்கள்: USDT & USDC</h2>
+  <p>
+    ஸ்டேபிள்காயின்கள் USD போன்ற குறிப்பு சொத்தை பின்தொடர்ந்து நிலையான மதிப்பை வழங்குகின்றன. On-chain உலகில் இருப்பினும்
+    விலை ஆவணச்சாய்வு அபாயத்தை குறைக்க உதவுகின்றன.
+  </p>
+  <ul>
+    <li><strong>USDT:</strong> பல சங்கிலிகளில் அதிகமாகப் பயன்படுத்தப்படும் பரிமாற்ற/கணக்கீட்டு அலகு.</li>
+    <li><strong>USDC:</strong> வெளிப்படைத்தன்மை மற்றும் கட்டுப்படுத்தப்பட்ட கூட்டாளர்கள் மூலம் நம்பிக்கையை வலுப்படுத்துகிறது.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="use">6) பயன்பாடுகள்: Payments, DeFi, NFTs</h2>
+  <ul>
+    <li><strong>கொடுப்பனவு/Remittance:</strong> எல்லைதாண்டி வேகமான செலுத்தல்கள்; கட்டணங்கள் பல சமயங்களில் குறைவு.</li>
+    <li><strong>DeFi:</strong> வங்கிகள் இன்றி கடன்/கடன் வாங்குதல்; DEX; பலன் உத்திகள்; அபாயம்—கொன்ட்ராக்ட் பிழைகள், திணிவு.</li>
+    <li><strong>NFTs:</strong> கலை, இசை, டிக்கெட், கேம் பொருட்கள்; உரிமை பதிவுகள் on-chain.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2 id="risks">7) அபாயங்கள் & பாதுகாப்பு</h2>
+  <ul>
+    <li>பெரிய தொகைக்கு Hardware Wallet; Seed Phrase-ஐ ஆஃப்லைனில் காப்பாற்றவும்.</li>
+    <li>Phishing-ஐ தவிர்க்க: URL சரிபார்க்கவும்; சந்தேகமான Approvals-ஐ Revoke செய்யவும்.</li>
+    <li>மாறுபாடு: முதலீட்டை பரவலாக்கவும்; இழக்கக் கூடியதற்குள் மட்டுமே முதலீடு செய்யவும்.</li>
+  </ul>
+</section>
+`;
+
+    // Populate content and switcher
+    const contentEl = document.getElementById('content');
+    const contentMap = { en, si, ta };
+    contentEl.innerHTML = en; // default English first
+
+    document.getElementById('languageSwitcher').addEventListener('change', (e) => {
+      const lang = e.target.value;
+      if (contentMap[lang]) {
+        contentEl.innerHTML = contentMap[lang];
+      } else {
+        // For other languages (ar/th/fr...), intentionally do nothing per your spec
+        contentEl.innerHTML = contentMap.en;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
