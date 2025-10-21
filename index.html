@@ -361,10 +361,10 @@
       font-weight:400 !important;
     }
 
-    /* If any '1' digits were auto-bolded inside the footer, reset them */
-    .pnl-card .card-footer .one-glyph{
-      font-family:inherit !important;
-      font-weight:400 !important;
+    /* (OLD reset removed/overridden) Make sure Referral Code uses the SAME '1' font as prices */
+    .pnl-card .card-footer .futures-ref .one-glyph{
+      font-family: "Binance PLEX", Inter, "Segoe UI", system-ui, -apple-system, sans-serif !important;
+      font-weight:700 !important;
     }
 
     /* 4) Lower Entry Price & Last Price a bit (without breaking left-shift) */
@@ -374,6 +374,12 @@
     .pnl-card .prices .entry,
     .pnl-card .prices .last{
       margin-top:6px !important;  /* local nudge down; uses margin to avoid overriding transform */
+    }
+
+    /* ==== FUTURES alignment tweak: move up & closer to BINANCE (no overlap) ==== */
+    .pnl-card .footer-left .binance-badge + .futures-ref{
+      margin-top:-4px !important;
+      transform:translateY(-2px) !important;
     }
     /* =============================================================== */
   </style>
@@ -1124,6 +1130,14 @@
       return `${Y}-${mm}-${DD} ${rest}`;
     }
 
+    /* ==== ROI mode → hide USDT label only there ==== */
+    function applyUSDTVisibility(mode){
+      const showUSDT = mode !== 'ROI'; // hide only for ROI
+      document.querySelectorAll('.pnl-card .usdt').forEach(el=>{
+        el.style.display = showUSDT ? '' : 'none';
+      });
+    }
+
     function syncCloneSlides(payload){
       const cards = Array.from(document.querySelectorAll('.pnl-card')).filter(c=>c.id!=='pnlCard');
       cards.forEach(card=>{
@@ -1141,6 +1155,8 @@
         set('.js-pnl', payload.pnlText);
         set('.js-entry', payload.entry);
         set('.js-last', payload.last);
+        // ensure '1' glyph styling also on clones
+        if (window.__wrapOnes) window.__wrapOnes(card);
       });
     }
 
@@ -1163,7 +1179,11 @@
     pnlEls.backdrop.addEventListener('click', (e)=>{ if(e.target === pnlEls.backdrop) closePNLModal(); });
 
     document.querySelectorAll('input[name="infoMode"]').forEach(r=>{
-      r.addEventListener('change', ()=>{ if(currentSharedTrade) updatePNLCardFromTrade(currentSharedTrade); });
+      r.addEventListener('change', ()=>{
+        const mode = (document.querySelector('input[name="infoMode"]:checked')||{}).value || 'PNL';
+        applyUSDTVisibility(mode);           // ✅ hide USDT only in ROI
+        if(currentSharedTrade) updatePNLCardFromTrade(currentSharedTrade);
+      });
     });
 
     function updatePNLCardFromTrade(t){
@@ -1189,6 +1209,9 @@
       pnlEls.entry.textContent = formatPrice(t.sym, t.entry);
       pnlEls.last.textContent  = formatPrice(t.sym, t.mark);
 
+      // ROI-only → hide USDT; other modes → show
+      applyUSDTVisibility(mode);
+
       const payload = {
         user: usernameStatic,
         timeHTML: pnlEls.time.innerHTML,
@@ -1201,6 +1224,9 @@
         last: pnlEls.last.textContent
       };
       syncCloneSlides(payload);
+
+      // ensure '1' glyph styling on the primary card too
+      if (window.__wrapOnes) window.__wrapOnes(document.getElementById('pnlCard'));
     }
 
     function setupSaveOnlyCard() {
@@ -1299,6 +1325,9 @@
       connectFuturesMarkWS();
       setupSaveOnlyCard();
       setSlide(0, true);
+
+      // initial USDT visibility aligned to default mode
+      applyUSDTVisibility((document.querySelector('input[name="infoMode"]:checked')||{}).value || 'PNL');
     })();
 
     document.getElementById("amount").textContent = "Loading…";
@@ -1307,13 +1336,11 @@
     document.getElementById("realizedSpan").textContent = "Loading…";
   </script>
 
-  <!-- ========= ONE-GLYPH PATCH (force digit `1` inside pnl-card to Binance PLEX) ========= -->
+  <!-- ========= ONE-GLYPH PATCH (force digit `1` inside ALL pnl-cards to Binance PLEX) ========= -->
   <script>
     (function(){
-      const pnlCard = document.getElementById('pnlCard');
-      if(!pnlCard) return;
-
       function wrapOnes(root){
+        if (!root) return;
         const walker = document.createTreeWalker(
           root,
           NodeFilter.SHOW_TEXT,
@@ -1321,7 +1348,7 @@
             acceptNode: (node) => {
               if (!node.nodeValue || node.nodeValue.indexOf('1') === -1) return NodeFilter.FILTER_REJECT;
               const p = node.parentNode;
-              if (!p || p.classList && p.classList.contains('one-glyph')) return NodeFilter.FILTER_REJECT;
+              if (!p || (p.classList && p.classList.contains('one-glyph'))) return NodeFilter.FILTER_REJECT;
               if (p.closest && p.closest('.no-one-stylize')) return NodeFilter.FILTER_REJECT;
               return NodeFilter.FILTER_ACCEPT;
             }
@@ -1349,14 +1376,24 @@
         });
       }
 
-      wrapOnes(pnlCard);
+      // expose globally so other code can call after content sync
+      window.__wrapOnes = wrapOnes;
 
-      let timer = null;
-      const mo = new MutationObserver(() => {
-        if (timer) cancelAnimationFrame(timer);
-        timer = requestAnimationFrame(()=> wrapOnes(pnlCard));
-      });
-      mo.observe(pnlCard, {subtree:true, childList:true, characterData:true});
+      // Run for all cards initially (slide 1, 2, 3)
+      document.querySelectorAll('.pnl-card').forEach(card => wrapOnes(card));
+
+      // Observe the whole modal for content changes and re-apply
+      const container = document.getElementById('pnlBackdrop');
+      if (container) {
+        let rafId = null;
+        const mo = new MutationObserver(() => {
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(()=> {
+            document.querySelectorAll('.pnl-card').forEach(card => wrapOnes(card));
+          });
+        });
+        mo.observe(container, {subtree:true, childList:true, characterData:true});
+      }
     })();
   </script>
 </body>
